@@ -37,9 +37,9 @@ model User {
   suspendedAt     DateTime?
   createdAt       DateTime  @default(now())
 
-  listings   Listing[]
-  bookings   Booking[]
-  favorites  Favorite[]
+  listings     Listing[]
+  bookings     Booking[]
+  favorites    Favorite[]
   verifyTokens EmailVerificationToken[]
   resetTokens  PasswordResetToken[]
   auditEvents  AuditEvent[]
@@ -108,8 +108,8 @@ model Booking {
   listing    Listing       @relation(fields: [listingId], references: [id], onDelete: Restrict)
   guestId    String
   guest      User          @relation(fields: [guestId], references: [id], onDelete: Restrict)
-  startDate  DateTime      @db.Date // check-in, inclusive
-  endDate    DateTime      @db.Date // check-out, exclusive
+  startDate  DateTime      @db.Date
+  endDate    DateTime      @db.Date
   guests     Int           @default(1)
   totalPrice Decimal       @db.Decimal(10, 2)
   status     BookingStatus @default(PENDING)
@@ -134,8 +134,8 @@ model Review {
 model Favorite {
   userId    String
   listingId String
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@id([userId, listingId])
